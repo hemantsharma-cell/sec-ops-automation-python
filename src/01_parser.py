@@ -1,3 +1,4 @@
+import os
 import csv
 def parse_openvas_csv(csv_file):
     vulnerabilities=[]
@@ -33,25 +34,30 @@ def parse_openvas_csv(csv_file):
             vulnerabilities.append(vulnerability)
     return vulnerabilities
 if __name__ == "__main__":
-    openvas_csv_file = input("Enter the name of the OpenVAS CSV file: ")
-    vulnerabilities = parse_openvas_csv(openvas_csv_file)
-    output_file = "report.csv"
-    with open(output_file, mode='w' , encoding='utf-8') as out_file:
-        for vulnerability in vulnerabilities:
-            out_file.write(f"IP: {vulnerability['ip']}\n")
-            out_file.write(f"Port: {vulnerability['port']}\n")
-            out_file.write(f"Protocol: {vulnerability['protocol']}\n")
-            out_file.write(f"CVSS: {vulnerability['cvss']}\n")
-            out_file.write(f"Severity: {vulnerability['severity']}\n")
-            out_file.write(f"NVT Name: {vulnerability['nvt_name']}\n")
-            out_file.write(f"Summary: {vulnerability['summary']}\n")
-            out_file.write(f"Impact: {vulnerability['impact']}\n")
-            out_file.write(f"Solution: {vulnerability['solution']}\n")
-            out_file.write(f"CVEs: {vulnerability['cves']}\n")
-            out_file.write(f"Task ID: {vulnerability['task_id']}\n")
-            out_file.write(f"Timestamp: {vulnerability['timestamp']}\n")
-            out_file.write(f"Result ID: {vulnerability['result_id']}\n")
-            out_file.write(f"Affected Software/OS: {vulnerability['affected_software']}\n")
-            out_file.write(f"Other References: {vulnerability['other_references']}\n")
-        print(f"Report successfully written to {output_file}")
+    filename = input("Enter the name of the OpenVAS CSV file: ")
+    openvas_csv_file = os.path.join("../data/raw/", filename)
+    if os.path.exists(openvas_csv_file):
+        vulnerabilities = parse_openvas_csv(openvas_csv_file)
+        output_file = "../data/processed/refined_data.csv"
+        with open(output_file, mode='w' , encoding='utf-8') as out_file:
+            for vulnerability in vulnerabilities:
+                out_file.write(f"IP: {vulnerability['ip']}\n")
+                out_file.write(f"Port: {vulnerability['port']}\n")
+                out_file.write(f"Protocol: {vulnerability['protocol']}\n")
+                out_file.write(f"CVSS: {vulnerability['cvss']}\n")
+                out_file.write(f"Severity: {vulnerability['severity']}\n")
+                out_file.write(f"NVT Name: {vulnerability['nvt_name']}\n")
+                out_file.write(f"Summary: {vulnerability['summary']}\n")
+                out_file.write(f"Impact: {vulnerability['impact']}\n")
+                out_file.write(f"Solution: {vulnerability['solution']}\n")
+                out_file.write(f"CVEs: {vulnerability['cves']}\n")
+                out_file.write(f"Task ID: {vulnerability['task_id']}\n")
+                out_file.write(f"Timestamp: {vulnerability['timestamp']}\n")
+                out_file.write(f"Result ID: {vulnerability['result_id']}\n")
+                out_file.write(f"Affected Software/OS: {vulnerability['affected_software']}\n")
+                out_file.write(f"Other References: {vulnerability['other_references']}\n")
+            print(f"Report successfully written to {output_file}")
+    else:
+        print(f"Error: File not found at {openvas_csv_file}")
             
+
