@@ -46,5 +46,7 @@ def generate_snort_rules_from_csv(csv_file, output_file="snortrule.rules"):
         print(f"An error occurred: {e}")
 
 if __name__ == "__main__":
-    csv_file = input("Enter the name of the OpenVAS CSV file: ")
-    generate_snort_rules_from_csv(csv_file)
+    input_csv = "../data/processed/refined_data.csv"
+    output_rules = "../output/signatures.rules"
+    generate_snort_rules_from_csv(input_csv, output_rules)
+
